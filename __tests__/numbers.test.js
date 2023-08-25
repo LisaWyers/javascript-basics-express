@@ -3,12 +3,20 @@ const app = require('../src/app');
 
 describe('/numbers', () => {
   describe('GET /add/{number}/and/{number}', () => {
-    xit('adds 2 and 1', done => {
+    it('adds 2 and 1', done => {
       request(app)
         .get('/numbers/add/2/and/1')
         .then(res => {
           expect(res.status).toEqual(200);
           expect(res.body).toEqual({ result: 3 });
+          done();
+        });
+    });
+    it('returns 400 for invalid input', done => {
+      request(app)
+        .get('/numbers/add/fish/and/chips')
+        .then(res => {
+          expect(res.status).toEqual(400);
           done();
         });
     });
